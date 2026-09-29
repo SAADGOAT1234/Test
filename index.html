@@ -1,359 +1,146 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Your Name | Portfolio</title>
+    <title>koller game vamoos</title>
 
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            scroll-behavior: smooth;
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #080808;
+            overflow: hidden;
+            background: #050505;
+            font-family: Arial, sans-serif;
             color: white;
-            overflow-x: hidden;
+            user-select: none;
         }
 
-        /* NAVBAR */
-
-        nav {
+        #game {
             position: fixed;
-            top: 0;
-            width: 100%;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 8%;
-            background: rgba(8, 8, 8, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid #1d1d1d;
-            z-index: 1000;
+            inset: 0;
         }
 
-        .logo {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -1px;
-        }
-
-        .logo span {
-            color: #777;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-
-        nav a {
-            color: #aaa;
-            text-decoration: none;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-
-        nav a:hover {
-            color: white;
-        }
-
-        /* HERO */
-
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 120px 8% 80px;
-            position: relative;
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: #333;
-            filter: blur(180px);
-            opacity: 0.15;
-            top: 10%;
-            left: 20%;
+        #ui {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 10;
             pointer-events: none;
         }
 
-        .hero-content {
-            max-width: 850px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .tag {
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 20px;
+        #score {
+            font-size: 28px;
+            font-weight: 900;
             letter-spacing: 2px;
-            text-transform: uppercase;
         }
 
-        .hero h1 {
-            font-size: clamp(50px, 8vw, 100px);
-            line-height: 0.95;
-            letter-spacing: -5px;
-            margin-bottom: 30px;
-        }
-
-        .hero h1 span {
-            color: #777;
-        }
-
-        .hero p {
-            color: #999;
-            max-width: 600px;
-            line-height: 1.7;
-            font-size: 17px;
-            margin-bottom: 35px;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 14px 24px;
-            border-radius: 8px;
-            text-decoration: none;
+        #coins {
+            margin-top: 8px;
+            color: #ffd43b;
             font-weight: bold;
-            font-size: 14px;
-            transition: 0.25s;
         }
 
-        .primary {
+        #speed {
+            margin-top: 5px;
+            color: #888;
+            font-size: 13px;
+        }
+
+        #startScreen,
+        #gameOver {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(8px);
+        }
+
+        #gameOver {
+            display: none;
+        }
+
+        h1 {
+            font-size: clamp(55px, 10vw, 110px);
+            letter-spacing: -6px;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #888;
+            margin-top: 10px;
+            margin-bottom: 35px;
+            letter-spacing: 3px;
+        }
+
+        button {
+            border: none;
+            padding: 16px 35px;
+            border-radius: 8px;
             background: white;
             color: black;
-        }
-
-        .primary:hover {
-            transform: translateY(-3px);
-            background: #ddd;
-        }
-
-        .secondary {
-            border: 1px solid #333;
-            color: white;
-        }
-
-        .secondary:hover {
-            border-color: #666;
-            transform: translateY(-3px);
-        }
-
-        /* GENERAL */
-
-        section {
-            padding: 110px 8%;
-        }
-
-        .section-title {
-            font-size: 42px;
-            letter-spacing: -2px;
-            margin-bottom: 12px;
-        }
-
-        .section-subtitle {
-            color: #777;
-            margin-bottom: 45px;
-        }
-
-        /* ABOUT */
-
-        .about {
-            background: #0c0c0c;
-            border-top: 1px solid #181818;
-            border-bottom: 1px solid #181818;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            max-width: 1100px;
-        }
-
-        .about-text {
-            color: #aaa;
-            line-height: 1.8;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .stat {
-            padding: 25px;
-            background: #111;
-            border: 1px solid #1e1e1e;
-            border-radius: 10px;
-        }
-
-        .stat h3 {
-            font-size: 30px;
-            margin-bottom: 5px;
-        }
-
-        .stat p {
-            color: #666;
-            font-size: 13px;
-        }
-
-        /* PROJECTS */
-
-        .projects {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
-
-        .project {
-            background: #0d0d0d;
-            border: 1px solid #1c1c1c;
-            border-radius: 14px;
-            padding: 30px;
-            transition: 0.3s;
-        }
-
-        .project:hover {
-            transform: translateY(-6px);
-            border-color: #444;
-        }
-
-        .project-number {
-            color: #555;
-            font-size: 13px;
-            margin-bottom: 25px;
-        }
-
-        .project h3 {
-            font-size: 25px;
-            margin-bottom: 12px;
-        }
-
-        .project p {
-            color: #777;
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .project-tags span {
-            background: #181818;
-            border: 1px solid #252525;
-            color: #999;
-            padding: 7px 10px;
-            border-radius: 5px;
-            font-size: 11px;
-        }
-
-        /* SKILLS */
-
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .skill {
-            padding: 13px 18px;
-            border: 1px solid #292929;
-            background: #101010;
-            border-radius: 7px;
-            color: #aaa;
+            font-weight: 900;
+            cursor: pointer;
+            font-size: 15px;
             transition: 0.2s;
         }
 
-        .skill:hover {
-            color: white;
-            border-color: #555;
+        button:hover {
+            transform: scale(1.05);
         }
 
-        /* CONTACT */
-
-        .contact {
-            text-align: center;
-            background: #0c0c0c;
-            border-top: 1px solid #181818;
+        #finalScore {
+            margin: 10px 0 25px;
+            color: #aaa;
         }
 
-        .contact p {
+        #controls {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
             color: #777;
-            max-width: 500px;
-            margin: 0 auto 30px;
-            line-height: 1.7;
-        }
-
-        /* FOOTER */
-
-        footer {
-            padding: 30px 8%;
-            text-align: center;
-            color: #444;
             font-size: 12px;
-            border-top: 1px solid #181818;
+            letter-spacing: 1px;
+            z-index: 10;
         }
 
-        /* MOBILE */
+        #mobileControls {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            width: 100%;
+            justify-content: center;
+            gap: 20px;
+            z-index: 15;
+        }
 
-        @media (max-width: 750px) {
+        .mobileButton {
+            width: 75px;
+            height: 55px;
+            padding: 0;
+            font-size: 25px;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
 
-            nav {
-                padding: 0 5%;
+        @media (max-width: 700px) {
+            #mobileControls {
+                display: flex;
             }
 
-            nav ul {
-                gap: 15px;
-            }
-
-            nav a {
-                font-size: 12px;
-            }
-
-            .hero {
-                padding-left: 5%;
-                padding-right: 5%;
-            }
-
-            .hero h1 {
-                letter-spacing: -3px;
-            }
-
-            section {
-                padding: 80px 5%;
-            }
-
-            .about-grid,
-            .projects {
-                grid-template-columns: 1fr;
-            }
-
-            .stats {
-                grid-template-columns: 1fr 1fr;
+            #controls {
+                display: none;
             }
         }
     </style>
@@ -361,125 +148,827 @@
 
 <body>
 
-    <!-- NAVIGATION -->
+<div id="game"></div>
 
-    <nav>
-        <div class="logo">
-            PORTFOLIO<span>.</span>
-        </div>
+<div id="ui">
+    <div id="score">SCORE: 0</div>
+    <div id="coins">COINS: 0</div>
+    <div id="speed">SPEED: 1.0x</div>
+</div>
 
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+<div id="controls">
+    ← A / D → &nbsp; • &nbsp; SPACE = JUMP
+</div>
 
+<div id="mobileControls">
+    <button class="mobileButton" id="left">←</button>
+    <button class="mobileButton" id="jump">↑</button>
+    <button class="mobileButton" id="right">→</button>
+</div>
 
-    <!-- HERO -->
+<div id="startScreen">
+    <h1>NEON RUN</h1>
+    <div class="subtitle">SURVIVE. COLLECT. RUN.</div>
+    <button id="startButton">START GAME</button>
+</div>
 
-    <section class="hero">
-
-        <div class="hero-content">
-
-            <div class="tag">
-                Game Developer • Creator • Designer
-            </div>
-
-            <h1>
-                I build<br>
-                <span>digital worlds.</span>
-            </h1>
-
-            <p>
-                I'm a developer and creator focused on building
-                games, experiences and digital projects. I enjoy
-                turning ideas into something people can actually play,
-                use and experience.
-            </p>
-
-            <div class="buttons">
-                <a href="#projects" class="button primary">
-                    View my work
-                </a>
-
-                <a href="#contact" class="button secondary">
-                    Contact me
-                </a>
-            </div>
-
-        </div>
-
-    </section>
+<div id="gameOver">
+    <h1>GAME OVER</h1>
+    <div id="finalScore">SCORE: 0</div>
+    <button id="restartButton">PLAY AGAIN</button>
+</div>
 
 
-    <!-- ABOUT -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 
-    <section class="about" id="about">
+<script>
 
-        <h2 class="section-title">About me</h2>
+    // ==============================
+    // SCENE
+    // ==============================
 
-        <p class="section-subtitle">
-            A little bit about what I do.
-        </p>
+    const scene = new THREE.Scene();
 
-        <div class="about-grid">
+    scene.background = new THREE.Color(0x050505);
 
-            <div class="about-text">
-
-                <p>
-                    I'm a creator interested in game development,
-                    scripting, UI design and building online
-                    communities.
-                </p>
-
-                <br>
-
-                <p>
-                    A lot of my work revolves around Roblox,
-                    where I build gameplay systems, competitive
-                    experiences, interfaces and football-related
-                    projects.
-                </p>
-
-                <br>
-
-                <p>
-                    I'm always experimenting with new ideas and
-                    improving my skills through actual projects.
-                </p>
-
-            </div>
-
-            <div class="stats">
-
-                <div class="stat">
-                    <h3>01</h3>
-                    <p>Game Development</p>
-                </div>
-
-                <div class="stat">
-                    <h3>02</h3>
-                    <p>Lua / Luau Scripting</p>
-                </div>
-
-                <div class="stat">
-                    <h3>03</h3>
-                    <p>UI & UX Design</p>
-                </div>
-
-                <div class="stat">
-                    <h3>04</h3>
-                    <p>Community Projects</p>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
+    scene.fog = new THREE.Fog(
+        0x050505,
+        25,
+        120
+    );
 
 
-    <!-- PR
-```
+    // ==============================
+    // CAMERA
+    // ==============================
+
+    const camera = new THREE.PerspectiveCamera(
+        65,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        200
+    );
+
+    camera.position.set(0, 6, 12);
+    camera.lookAt(0, 1, -20);
+
+
+    // ==============================
+    // RENDERER
+    // ==============================
+
+    const renderer = new THREE.WebGLRenderer({
+        antialias: true
+    });
+
+    renderer.setPixelRatio(
+        Math.min(window.devicePixelRatio, 2)
+    );
+
+    renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+    );
+
+    renderer.shadowMap.enabled = true;
+
+    document
+        .getElementById("game")
+        .appendChild(renderer.domElement);
+
+
+    // ==============================
+    // LIGHTING
+    // ==============================
+
+    const ambient = new THREE.AmbientLight(
+        0xffffff,
+        0.5
+    );
+
+    scene.add(ambient);
+
+    const moonLight = new THREE.DirectionalLight(
+        0xffffff,
+        1.5
+    );
+
+    moonLight.position.set(
+        5,
+        15,
+        5
+    );
+
+    moonLight.castShadow = true;
+
+    scene.add(moonLight);
+
+
+    // ==============================
+    // ROAD
+    // ==============================
+
+    const roadGeometry = new THREE.BoxGeometry(
+        14,
+        0.4,
+        200
+    );
+
+    const roadMaterial = new THREE.MeshStandardMaterial({
+        color: 0x111111,
+        roughness: 0.8
+    });
+
+    const road = new THREE.Mesh(
+        roadGeometry,
+        roadMaterial
+    );
+
+    road.position.set(
+        0,
+        -0.4,
+        -45
+    );
+
+    road.receiveShadow = true;
+
+    scene.add(road);
+
+
+    // ==============================
+    // ROAD LINES
+    // ==============================
+
+    const lines = [];
+
+    for (let i = 0; i < 35; i++) {
+
+        const geometry = new THREE.BoxGeometry(
+            0.15,
+            0.03,
+            4
+        );
+
+        const material = new THREE.MeshBasicMaterial({
+            color: 0x444444
+        });
+
+        const line = new THREE.Mesh(
+            geometry,
+            material
+        );
+
+        line.position.set(
+            0,
+            -0.18,
+            -i * 6
+        );
+
+        scene.add(line);
+
+        lines.push(line);
+    }
+
+
+    // ==============================
+    // PLAYER
+    // ==============================
+
+    const playerGeometry =
+        new THREE.BoxGeometry(
+            1.2,
+            1.8,
+            1.2
+        );
+
+    const playerMaterial =
+        new THREE.MeshStandardMaterial({
+            color: 0xffffff,
+            roughness: 0.3
+        });
+
+    const player = new THREE.Mesh(
+        playerGeometry,
+        playerMaterial
+    );
+
+    player.position.set(
+        0,
+        0.7,
+        5
+    );
+
+    player.castShadow = true;
+
+    scene.add(player);
+
+
+    // Player glow
+    const playerLight =
+        new THREE.PointLight(
+            0xffffff,
+            3,
+            10
+        );
+
+    playerLight.position.set(
+        0,
+        2,
+        5
+    );
+
+    scene.add(playerLight);
+
+
+    // ==============================
+    // GAME VARIABLES
+    // ==============================
+
+    let running = false;
+
+    let score = 0;
+    let coinCount = 0;
+
+    let speed = 0.35;
+
+    let playerLane = 1;
+
+    const lanes = [
+        -4,
+        0,
+        4
+    ];
+
+    let targetX = 0;
+
+    let verticalVelocity = 0;
+    let jumping = false;
+
+    const obstacles = [];
+    const coins = [];
+
+    let spawnTimer = 0;
+    let coinTimer = 0;
+
+
+    // ==============================
+    // OBSTACLE
+    // ==============================
+
+    function createObstacle() {
+
+        const geometry =
+            new THREE.BoxGeometry(
+                2.4,
+                2.5,
+                2.4
+            );
+
+        const material =
+            new THREE.MeshStandardMaterial({
+                color: 0xff2222,
+                roughness: 0.4
+            });
+
+        const obstacle =
+            new THREE.Mesh(
+                geometry,
+                material
+            );
+
+        const lane =
+            Math.floor(Math.random() * 3);
+
+        obstacle.position.set(
+            lanes[lane],
+            1.25,
+            -90
+        );
+
+        obstacle.castShadow = true;
+
+        scene.add(obstacle);
+
+        obstacles.push(obstacle);
+    }
+
+
+    // ==============================
+    // COIN
+    // ==============================
+
+    function createCoin() {
+
+        const geometry =
+            new THREE.TorusGeometry(
+                0.55,
+                0.18,
+                12,
+                24
+            );
+
+        const material =
+            new THREE.MeshStandardMaterial({
+                color: 0xffd43b,
+                emissive: 0x664400,
+                metalness: 0.8
+            });
+
+        const coin =
+            new THREE.Mesh(
+                geometry,
+                material
+            );
+
+        const lane =
+            Math.floor(Math.random() * 3);
+
+        coin.position.set(
+            lanes[lane],
+            1.3,
+            -90
+        );
+
+        coin.rotation.y =
+            Math.PI / 2;
+
+        scene.add(coin);
+
+        coins.push(coin);
+    }
+
+
+    // ==============================
+    // INPUT
+    // ==============================
+
+    function moveLeft() {
+
+        if (!running) return;
+
+        playerLane--;
+
+        if (playerLane < 0)
+            playerLane = 0;
+
+        targetX = lanes[playerLane];
+    }
+
+
+    function moveRight() {
+
+        if (!running) return;
+
+        playerLane++;
+
+        if (playerLane > 2)
+            playerLane = 2;
+
+        targetX = lanes[playerLane];
+    }
+
+
+    function jump() {
+
+        if (!running) return;
+
+        if (!jumping) {
+
+            jumping = true;
+
+            verticalVelocity = 0.22;
+        }
+    }
+
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "ArrowLeft" ||
+                event.key.toLowerCase() === "a"
+            ) {
+                moveLeft();
+            }
+
+            if (
+                event.key === "ArrowRight" ||
+                event.key.toLowerCase() === "d"
+            ) {
+                moveRight();
+            }
+
+            if (
+                event.key === " " ||
+                event.key === "ArrowUp"
+            ) {
+                jump();
+            }
+
+        }
+    );
+
+
+    // Mobile buttons
+
+    document
+        .getElementById("left")
+        .addEventListener(
+            "touchstart",
+            moveLeft
+        );
+
+    document
+        .getElementById("right")
+        .addEventListener(
+            "touchstart",
+            moveRight
+        );
+
+    document
+        .getElementById("jump")
+        .addEventListener(
+            "touchstart",
+            jump
+        );
+
+
+    // ==============================
+    // COLLISION
+    // ==============================
+
+    function collision(a, b) {
+
+        const boxA =
+            new THREE.Box3()
+                .setFromObject(a);
+
+        const boxB =
+            new THREE.Box3()
+                .setFromObject(b);
+
+        return boxA.intersectsBox(boxB);
+    }
+
+
+    // ==============================
+    // GAME OVER
+    // ==============================
+
+    function endGame() {
+
+        running = false;
+
+        document
+            .getElementById("finalScore")
+            .textContent =
+            "SCORE: " + Math.floor(score);
+
+        document
+            .getElementById("gameOver")
+            .style.display = "flex";
+    }
+
+
+    // ==============================
+    // START
+    // ==============================
+
+    function startGame() {
+
+        score = 0;
+        coinCount = 0;
+        speed = 0.35;
+
+        playerLane = 1;
+        targetX = 0;
+
+        player.position.set(
+            0,
+            0.7,
+            5
+        );
+
+        jumping = false;
+        verticalVelocity = 0;
+
+        // Remove old obstacles
+
+        obstacles.forEach(
+            obstacle =>
+                scene.remove(obstacle)
+        );
+
+        obstacles.length = 0;
+
+        // Remove old coins
+
+        coins.forEach(
+            coin =>
+                scene.remove(coin)
+        );
+
+        coins.length = 0;
+
+        running = true;
+
+        document
+            .getElementById("startScreen")
+            .style.display = "none";
+
+        document
+            .getElementById("gameOver")
+            .style.display = "none";
+    }
+
+
+    document
+        .getElementById("startButton")
+        .addEventListener(
+            "click",
+            startGame
+        );
+
+    document
+        .getElementById("restartButton")
+        .addEventListener(
+            "click",
+            startGame
+        );
+
+
+    // ==============================
+    // GAME LOOP
+    // ==============================
+
+    const clock =
+        new THREE.Clock();
+
+    function animate() {
+
+        requestAnimationFrame(animate);
+
+        const delta =
+            clock.getDelta();
+
+
+        if (running) {
+
+            // Increase speed
+            speed += delta * 0.008;
+
+
+            // Score
+            score += delta * 10;
+
+
+            // Player movement
+            player.position.x +=
+                (targetX -
+                player.position.x) *
+                0.15;
+
+
+            // Jump physics
+
+            if (jumping) {
+
+                player.position.y +=
+                    verticalVelocity;
+
+                verticalVelocity -=
+                    0.012;
+
+                if (
+                    player.position.y <= 0.7
+                ) {
+
+                    player.position.y = 0.7;
+
+                    jumping = false;
+
+                    verticalVelocity = 0;
+                }
+            }
+
+
+            // Road movement
+
+            lines.forEach(
+                line => {
+
+                    line.position.z +=
+                        speed * 2;
+
+                    if (
+                        line.position.z > 15
+                    ) {
+                        line.position.z -=
+                            210;
+                    }
+
+                }
+            );
+
+
+            // Spawn obstacles
+
+            spawnTimer += delta;
+
+            if (
+                spawnTimer >
+                Math.max(
+                    0.45,
+                    1.4 - speed
+                )
+            ) {
+
+                createObstacle();
+
+                spawnTimer = 0;
+            }
+
+
+            // Spawn coins
+
+            coinTimer += delta;
+
+            if (coinTimer > 0.8) {
+
+                createCoin();
+
+                coinTimer = 0;
+            }
+
+
+            // Move obstacles
+
+            obstacles.forEach(
+                (obstacle, index) => {
+
+                    obstacle.position.z +=
+                        speed * 2;
+
+                    obstacle.rotation.y +=
+                        delta * 0.8;
+
+
+                    if (
+                        collision(
+                            player,
+                            obstacle
+                        )
+                    ) {
+
+                        // Jumping over obstacle
+                        // avoids collision if high enough
+
+                        if (
+                            player.position.y < 1.5
+                        ) {
+                            endGame();
+                        }
+                    }
+
+
+                    if (
+                        obstacle.position.z > 15
+                    ) {
+
+                        scene.remove(obstacle);
+
+                        obstacles.splice(
+                            index,
+                            1
+                        );
+                    }
+
+                }
+            );
+
+
+            // Move coins
+
+            coins.forEach(
+                (coin, index) => {
+
+                    coin.position.z +=
+                        speed * 2;
+
+                    coin.rotation.x +=
+                        delta * 4;
+
+                    coin.rotation.z +=
+                        delta * 2;
+
+
+                    if (
+                        collision(
+                            player,
+                            coin
+                        )
+                    ) {
+
+                        coinCount++;
+
+                        score += 100;
+
+                        scene.remove(coin);
+
+                        coins.splice(
+                            index,
+                            1
+                        );
+                    }
+
+
+                    if (
+                        coin.position.z > 15
+                    ) {
+
+                        scene.remove(coin);
+
+                        coins.splice(
+                            index,
+                            1
+                        );
+                    }
+
+                }
+            );
+
+
+            // Camera follows player
+
+            camera.position.x +=
+                (player.position.x * 0.35 -
+                camera.position.x) *
+                0.05;
+
+            camera.lookAt(
+                player.position.x * 0.2,
+                1,
+                -20
+            );
+
+
+            // UI
+
+            document
+                .getElementById("score")
+                .textContent =
+                "SCORE: " +
+                Math.floor(score);
+
+            document
+                .getElementById("coins")
+                .textContent =
+                "COINS: " +
+                coinCount;
+
+            document
+                .getElementById("speed")
+                .textContent =
+                "SPEED: " +
+                (speed / 0.35).toFixed(1) +
+                "x";
+        }
+
+
+        renderer.render(
+            scene,
+            camera
+        );
+    }
+
+
+    animate();
+
+
+    // ==============================
+    // RESIZE
+    // ==============================
+
+    window.addEventListener(
+        "resize",
+        function() {
+
+            camera.aspect =
+                window.innerWidth /
+                window.innerHeight;
+
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(
+                window.innerWidth,
+                window.innerHeight
+            );
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
